@@ -45,5 +45,8 @@ for my $mp3 (<*.mp3>) {
 	close OUT;
     }
 
-    system 'lame', '--decode', "$mp3", "$outdir/$file.wav" if $do_wav;
+    if ($do_wav) {
+      my $rv = system 'lame', '--decode', "$mp3", "$outdir/$file.wav";
+      die if $rv >> 8;
+    }
 }
